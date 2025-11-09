@@ -1,0 +1,32 @@
+@import "tailwindcss";
+@import "maplibre-gl/dist/maplibre-gl.css";
+
+:root {
+  /* Skyrim/Elder Scrolls color palette */
+  --parchment: #E8DCC4;
+  --dark-brown: #2B1810;
+  --gold: #C9A961;
+  --bronze: #8B6F47;
+  --shadow: rgba(0, 0, 0, 0.8);
+}
+
+@theme inline {
+  --font-sans: var(--font-cinzel);
+  --font-serif: var(--font-spectral);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: transparent;
+  margin: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  font-family: var(--font-spectral), serif;
+  color: var(--parchment);
+}

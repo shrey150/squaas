@@ -69,6 +69,11 @@ async def simulate_gps(game_state: GameState):
             message_index = (message_index + 1) % len(messages)
             last_message_time = current_time
         
+        # Clear message after it should have disappeared
+        if game_state.message.visible and current_time - last_message_time > 3.5:
+            game_state.message.visible = False
+            game_state.message.text = ""
+        
         # Update rate: 200ms = 5 Hz
         await asyncio.sleep(0.2)
 

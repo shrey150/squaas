@@ -1,0 +1,142 @@
+/* Skyrim/Elder Scrolls UI Styling */
+
+.ornateCorner {
+  position: relative;
+}
+
+.ornateCorner::before,
+.ornateCorner::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--gold);
+}
+
+.ornateCorner::before {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.ornateCorner::after {
+  top: -2px;
+  right: -2px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.ornateBottom::before,
+.ornateBottom::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--gold);
+}
+
+.ornateBottom::before {
+  bottom: -2px;
+  left: -2px;
+  border-right: none;
+  border-top: none;
+}
+
+.ornateBottom::after {
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
+}
+
+.parchmentTexture {
+  background: linear-gradient(
+    135deg,
+    rgba(232, 220, 196, 0.95) 0%,
+    rgba(232, 220, 196, 0.85) 50%,
+    rgba(232, 220, 196, 0.95) 100%
+  );
+  background-blend-mode: multiply;
+}
+
+.leatherTexture {
+  background: linear-gradient(
+    180deg,
+    rgba(43, 24, 16, 0.9) 0%,
+    rgba(43, 24, 16, 0.95) 50%,
+    rgba(43, 24, 16, 0.85) 100%
+  );
+}
+
+.metalBorder {
+  border: 3px solid var(--bronze);
+  box-shadow: 
+    inset 0 0 20px rgba(0, 0, 0, 0.5),
+    0 0 10px rgba(0, 0, 0, 0.8),
+    0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+.goldText {
+  color: var(--gold);
+  text-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.9),
+    0 0 8px rgba(201, 169, 97, 0.5);
+  font-family: var(--font-cinzel), serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.darkText {
+  color: var(--dark-brown);
+  text-shadow: 
+    1px 1px 2px rgba(255, 255, 255, 0.3);
+  font-family: var(--font-spectral), serif;
+}
+
+.fadeInScale {
+  animation: fadeInScale 0.5s ease-out forwards;
+}
+
+.fadeOutScale {
+  animation: fadeOutScale 0.5s ease-out forwards;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes fadeOutScale {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+
+.vignette {
+  position: relative;
+}
+
+.vignette::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 40px 20px rgba(0, 0, 0, 0.6);
+  border-radius: inherit;
+}
+
