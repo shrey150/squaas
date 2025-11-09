@@ -20,7 +20,7 @@ export default function ObjectiveBar({ objective, dangerLevel = 'none' }: Object
 
   return (
     <div className="fixed top-8 left-1/2 -translate-x-1/2 z-20">
-      <div className={`${bgStyle} ${styles.ornateCorner} ${styles.ornateBottom} relative px-12 py-4 min-w-[400px] max-w-[800px] transition-all duration-500`}>
+      <div className={`${bgStyle} relative px-32 py-14 min-w-[600px] max-w-[1100px] transition-all duration-500`}>
         {/* Decorative border elements */}
         <div className={`absolute inset-0 border-2 ${borderStyle} pointer-events-none`} style={{ 
           boxShadow: 'inset 0 0 15px rgba(0, 0, 0, 0.8), 0 4px 8px rgba(0, 0, 0, 0.6)'
@@ -28,7 +28,7 @@ export default function ObjectiveBar({ objective, dangerLevel = 'none' }: Object
         
         {/* Center ornament */}
         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-          <svg width="40" height="20" viewBox="0 0 40 20">
+          <svg width="50" height="25" viewBox="0 0 40 20">
             <path 
               d="M0,20 L10,5 L20,0 L30,5 L40,20 L30,18 L20,15 L10,18 Z" 
               fill="#C9A961" 
@@ -40,16 +40,18 @@ export default function ObjectiveBar({ objective, dangerLevel = 'none' }: Object
 
         {/* Objective text */}
         <div className="relative text-center">
-          <div className="text-xs tracking-widest mb-1" style={{ 
+          <br />
+          <div className="text-base tracking-widest mb-3" style={{ 
             color: '#C9A961', 
             fontFamily: 'var(--font-cinzel)',
             textShadow: '1px 1px 2px rgba(0, 0, 0, 0.9)'
           }}>
             CURRENT OBJECTIVE
           </div>
-          <div className={`${styles.goldText} text-xl`}>
+          <div className={`${styles.goldText} text-5xl`}>
             {objective}
           </div>
+          <br />
         </div>
 
         {/* Bottom decorative line */}

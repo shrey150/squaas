@@ -131,7 +131,7 @@ export default function MapOverlay({ player, pois, dangerLevel = 'none' }: MapOv
       <div className={`${styles.metalBorder} ${styles.vignette} ${borderColor} ${glowEffect} relative overflow-hidden rounded-lg transition-all duration-500`}>
         <div
           ref={mapContainerRef}
-          className="w-80 h-80"
+          className="w-[500px] h-[500px]"
           style={{ background: '#1a1a1a' }}
         />
         {/* Compass decoration */}
