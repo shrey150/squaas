@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+:root {
+  /* Skyrim/Elder Scrolls color palette */
+  --parchment: #E8DCC4;
+  --dark-brown: #1a0f0a;
+  --darker-brown: #0d0705;
+  --gold: #C9A961;
+  --bronze: #8B6F47;
+  --shadow: rgba(0, 0, 0, 0.9);
+}
+
+@theme inline {
+  --font-sans: var(--font-cinzel);
+  --font-serif: var(--font-spectral);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--darker-brown);
+  color: var(--parchment);
+  font-family: var(--font-spectral), serif;
+  overflow-x: hidden;
+}
+
+/* Ornate border styles */
+.ornate-border {
+  position: relative;
+  border: 2px solid var(--bronze);
+  box-shadow: 
+    inset 0 0 20px rgba(0, 0, 0, 0.8),
+    0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.ornate-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, 
+    var(--bronze) 0%, 
+    var(--gold) 25%, 
+    var(--bronze) 50%, 
+    var(--gold) 75%, 
+    var(--bronze) 100%
+  );
+  z-index: -1;
+  opacity: 0.3;
+}
+
+/* Gold text with shadow */
+.gold-text {
+  color: var(--gold);
+  text-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.9),
+    0 0 10px rgba(201, 169, 97, 0.3);
+  font-family: var(--font-cinzel), serif;
+}
+
+/* Leather texture effect */
+.leather-texture {
+  background: linear-gradient(135deg, 
+    #2B1810 0%, 
+    #3d2318 50%, 
+    #2B1810 100%
+  );
+  box-shadow: 
+    inset 0 2px 4px rgba(255, 255, 255, 0.1),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
