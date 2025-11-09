@@ -9,12 +9,17 @@ interface MobileMapProps {
   player: Player;
   pois: POI[];
   dangerLevel?: string;
+  gpsPosition?: { lat: number; lon: number; heading: number } | null;
 }
 
-export default function MobileMap({ player, pois, dangerLevel = 'none' }: MobileMapProps) {
+export default function MobileMap({ player, pois, dangerLevel = 'none', gpsPosition = null }: MobileMapProps) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const markersRef = useRef<maplibregl.Marker[]>([]);
+  const playerMarkerRef = useRef<maplibregl.Marker | null>(null);
+
+  // Use GPS position if available, otherwise fall back to WebSocket player data
+  const currentPosition = gpsPosition || player;
 
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
@@ -49,7 +54,7 @@ export default function MobileMap({ player, pois, dangerLevel = 'none' }: Mobile
         ],
         glyphs: 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf',
       },
-      center: [-122.4194, 37.7749],  // San Francisco center
+      center: [currentPosition.lon, currentPosition.lat],
       zoom: 14,  // Slightly more zoomed in for mobile
       pitch: 0,
       bearing: 0,
@@ -68,26 +73,35 @@ export default function MobileMap({ player, pois, dangerLevel = 'none' }: Mobile
     playerMarker.style.borderRadius = '50%';
     playerMarker.style.boxShadow = '0 0 8px rgba(201, 169, 97, 0.8)';
 
-    new maplibregl.Marker({ element: playerMarker, anchor: 'center' })
-      .setLngLat([player.lon, player.lat])
+    const marker = new maplibregl.Marker({ element: playerMarker, anchor: 'center' })
+      .setLngLat([currentPosition.lon, currentPosition.lat])
       .addTo(map);
+    
+    playerMarkerRef.current = marker;
 
     return () => {
       map.remove();
       mapRef.current = null;
+      playerMarkerRef.current = null;
     };
   }, []);
 
-  // Update map center and bearing
+  // Update map center and bearing (GTA V style rotation)
   useEffect(() => {
     if (!mapRef.current) return;
 
+    // Update map center and rotation
     mapRef.current.easeTo({
-      center: [player.lon, player.lat],
-      bearing: player.heading,
+      center: [currentPosition.lon, currentPosition.lat],
+      bearing: currentPosition.heading,
       duration: 100,
     });
-  }, [player.lat, player.lon, player.heading]);
+
+    // Update player marker position
+    if (playerMarkerRef.current) {
+      playerMarkerRef.current.setLngLat([currentPosition.lon, currentPosition.lat]);
+    }
+  }, [currentPosition.lat, currentPosition.lon, currentPosition.heading]);
 
   // Update POI markers
   useEffect(() => {

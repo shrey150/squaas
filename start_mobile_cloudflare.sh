@@ -3,8 +3,6 @@
 # Ultra-simple script using Cloudflare Tunnel (free, no signup needed!)
 # This is the EASIEST way to test on your phone
 
-set -e
-
 # Colors
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -39,44 +37,54 @@ trap cleanup EXIT INT TERM
 
 echo -e "${BLUE}Starting backend...${NC}"
 cd backend
-poetry run uvicorn main:app --host 0.0.0.0 --port 8787 > /dev/null 2>&1 &
+poetry run uvicorn main:app --host 0.0.0.0 --port 8787 &
+BACKEND_PID=$!
 cd ..
 sleep 3
-echo -e "${GREEN}✓ Backend running${NC}"
+echo -e "${GREEN}✓ Backend running (PID: $BACKEND_PID)${NC}"
+echo ""
 
 echo -e "${BLUE}Starting frontend...${NC}"
 cd frontend
-npm run dev > /dev/null 2>&1 &
+npm run dev &
+FRONTEND_PID=$!
 cd ..
-sleep 4
-echo -e "${GREEN}✓ Frontend running${NC}"
+sleep 5
+echo -e "${GREEN}✓ Frontend running (PID: $FRONTEND_PID)${NC}"
 echo ""
 
 echo -e "${BLUE}Starting Cloudflare Tunnel...${NC}"
+echo ""
+
+# Start cloudflared and capture output
 cloudflared tunnel --url http://localhost:3000 2>&1 | while IFS= read -r line; do
+    # Check if this line contains the tunnel URL
     if [[ $line == *"trycloudflare.com"* ]]; then
-        URL=$(echo "$line" | grep -o 'https://[^ ]*')
-        echo ""
-        echo -e "${GREEN}========================================${NC}"
-        echo -e "${GREEN}  🎉 Ready to test!${NC}"
-        echo -e "${GREEN}========================================${NC}"
-        echo ""
-        echo -e "${BLUE}📱 Open this on your iPhone:${NC}"
-        echo -e "   ${GREEN}${URL}/phone${NC}"
-        echo ""
-        echo -e "${BLUE}💻 Desktop version:${NC}"
-        echo -e "   ${GREEN}${URL}${NC}"
-        echo ""
-        if command -v qrencode &> /dev/null; then
-            echo -e "${YELLOW}Scan this QR code:${NC}"
-            qrencode -t ANSIUTF8 "${URL}/phone"
+        URL=$(echo "$line" | grep -o 'https://[^ ]*' | head -1)
+        if [ ! -z "$URL" ]; then
+            echo ""
+            echo -e "${GREEN}========================================${NC}"
+            echo -e "${GREEN}  🎉 Ready to test!${NC}"
+            echo -e "${GREEN}========================================${NC}"
+            echo ""
+            echo -e "${BLUE}📱 Open this on your iPhone:${NC}"
+            echo -e "   ${GREEN}${URL}/phone${NC}"
+            echo ""
+            echo -e "${BLUE}💻 Desktop version:${NC}"
+            echo -e "   ${GREEN}${URL}${NC}"
+            echo ""
+            if command -v qrencode &> /dev/null; then
+                echo -e "${YELLOW}Scan this QR code:${NC}"
+                qrencode -t ANSIUTF8 "${URL}/phone" 2>/dev/null || echo "(QR code generation failed)"
+                echo ""
+            fi
+            echo -e "${YELLOW}Press Ctrl+C to stop${NC}"
             echo ""
         fi
-        echo -e "${YELLOW}Press Ctrl+C to stop${NC}"
-        echo ""
     fi
-    echo "$line" | grep -v "INF" | grep -v "http://" || true
+    # Show the line if it's not a verbose log line
+    if [[ ! $line == *"INF"* ]] && [[ ! $line == *"http://localhost"* ]]; then
+        echo "$line"
+    fi
 done
-
-wait
 
