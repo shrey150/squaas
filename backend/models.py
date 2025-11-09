@@ -51,3 +51,10 @@ class MessageUpdate(BaseModel):
     text: str
     timeoutMs: int = 3000
 
+
+class DangerUpdate(BaseModel):
+    """Update danger level and boss fight state"""
+    danger_level: str  # "none", "low", "high"
+    boss_fight_active: bool
+    boss_name: Optional[str] = None
+

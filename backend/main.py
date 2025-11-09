@@ -6,7 +6,7 @@ import json
 from typing import List
 from models import (
     GameState, Player, POI, Message,
-    LocationUpdate, CameraDescription, ObjectiveUpdate, MessageUpdate
+    LocationUpdate, CameraDescription, ObjectiveUpdate, MessageUpdate, DangerUpdate
 )
 from pois_database import get_nearby_pois
 from ai_processor import process_camera_description
@@ -177,6 +177,16 @@ async def send_message(update: MessageUpdate):
         timeoutMs=update.timeoutMs
     )
     return {"status": "message_sent"}
+
+
+@app.post("/api/danger")
+async def update_danger(update: DangerUpdate):
+    """Update danger level and boss fight state (called from bot_realtime.py)"""
+    global game_state
+    game_state.danger_level = update.danger_level
+    game_state.boss_fight_active = update.boss_fight_active
+    game_state.boss_name = update.boss_name
+    return {"status": "danger_updated"}
 
 
 @app.get("/api/state")
