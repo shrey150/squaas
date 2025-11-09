@@ -3,7 +3,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { GameState } from '@/types/game-state';
 
-const WS_URL = 'ws://localhost:8787/ws';
+// Use environment variable if available, otherwise default to localhost
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8787/ws';
 const RECONNECT_DELAY = 2000; // 2 seconds
 
 const defaultState: GameState = {
