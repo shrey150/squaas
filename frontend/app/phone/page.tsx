@@ -33,7 +33,7 @@ export default function PhonePage() {
       )}
 
       {/* Main content container */}
-      <div className="flex flex-col h-full pb-24">
+      <div className="flex flex-col h-full">
         {/* Map at top - uses real GPS if available */}
         <MobileMap 
           player={state.player} 
@@ -54,12 +54,14 @@ export default function PhonePage() {
           isActive={state.boss_fight_active} 
         />
 
-        {/* Spacer to push content up and allow for safe area at bottom */}
-        <div className="flex-grow min-h-4" />
-      </div>
+        {/* Small spacer */}
+        <div className="h-8" />
 
-      {/* Panic Button */}
-      <PanicButton />
+        {/* Panic Button - inline instead of fixed */}
+        <div className="px-4 pb-6">
+          <PanicButton />
+        </div>
+      </div>
 
       {/* Message Overlay */}
       <MobileMessage message={state.message} />

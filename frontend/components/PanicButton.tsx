@@ -107,7 +107,7 @@ export default function PanicButton({ onPanic, onResolve }: PanicButtonProps) {
   };
 
   return (
-    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 mb-safe">
+    <div className="w-full flex justify-center">
       <button
         onClick={handleClick}
         disabled={cooldown}
