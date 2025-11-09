@@ -7,7 +7,8 @@ Watch the frontend at http://localhost:3000 to see the overlay update in real-ti
 import requests
 import time
 import random
-import math
+import math 
+from tts import stream_tts
 
 BASE_URL = "http://localhost:8787"
 
@@ -118,6 +119,7 @@ def demo_sequence():
     print_banner("PHASE 1: Beginning the Adventure")
     
     send_message("Adventure Begins!", 4000)
+    stream_tts("Adventure begins!", play=True)
     time.sleep(2)
     
     location = SF_LOCATIONS[0]
@@ -179,6 +181,7 @@ def demo_sequence():
     print_banner("PHASE 4: ⚔️ BOSS ENCOUNTER! ⚔️")
     
     send_message("DANGER APPROACHING!", 3000)
+    stream_tts("Danger approaching!", play=True)
     time.sleep(2)
     
     print("📸 Camera: AGGRESSIVE CONFRONTATION!")
@@ -197,6 +200,7 @@ def demo_sequence():
     print_banner("PHASE 5: Victory!")
     
     send_message("Enemy Defeated!", 4000)
+    stream_tts("Enemy defeated!", play=True)
     time.sleep(2)
     
     location = SF_LOCATIONS[5]
@@ -215,6 +219,7 @@ def demo_sequence():
     # Finale
     print_banner("🎉 QUEST COMPLETE! 🎉")
     send_message("Achievement Unlocked: First Quest!", 5000)
+    stream_tts("Achievement unlocked: First quest!", play=True)
     time.sleep(3)
     
     print("\n✅ Demo complete!")
