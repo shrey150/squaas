@@ -30,3 +30,15 @@ body {
   font-family: var(--font-spectral), serif;
   color: var(--parchment);
 }
+
+/* Safe area support for mobile devices (iPhone notch/home indicator) */
+@supports (padding: max(0px)) {
+  .safe-area-insets {
+    padding-top: max(env(safe-area-inset-top), 0px);
+    padding-bottom: max(env(safe-area-inset-bottom), 0px);
+  }
+  
+  .mb-safe {
+    margin-bottom: max(env(safe-area-inset-bottom), 16px);
+  }
+}

@@ -34,6 +34,7 @@ load_dotenv()
 
 # Configuration
 SIDEQUEST_API = "http://localhost:8787"
+SIDEQUEST_API_PROD = "https://squaas.onrender.com"
 DEFAULT_INTERVAL = 3.0  # 0.33 FPS - good balance of detail and cost
 DEFAULT_CONTEXT_SIZE = 5  # Remember last 15 seconds
 DEFAULT_MODEL = "gpt-4o"
@@ -327,8 +328,13 @@ def main() -> None:
     parser.add_argument(
         "--api-url",
         type=str,
-        default=SIDEQUEST_API,
+        default=None,
         help=f"SideQuest backend API URL (default: {SIDEQUEST_API})",
+    )
+    parser.add_argument(
+        "--prod",
+        action="store_true",
+        help=f"Use production backend at {SIDEQUEST_API_PROD}",
     )
     parser.add_argument(
         "--once",
@@ -336,6 +342,12 @@ def main() -> None:
         help="Run a single cycle and exit (useful for testing)",
     )
     args = parser.parse_args()
+    
+    # Set API URL based on --prod flag or --api-url argument
+    if args.prod:
+        args.api_url = SIDEQUEST_API_PROD
+    elif args.api_url is None:
+        args.api_url = SIDEQUEST_API
 
     # Verify requirements
     require_env("OPENAI_API_KEY")

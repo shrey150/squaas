@@ -14,9 +14,7 @@ export default function PhonePage() {
   const { position: gpsPosition, status: gpsStatus, error: gpsError } = useGeolocation();
 
   return (
-    <div className="w-screen h-screen overflow-hidden bg-black">
-      {/* Mobile viewport meta is handled in layout.tsx */}
-      
+    <div className="w-screen h-[100dvh] overflow-hidden bg-black safe-area-insets">
       {/* Connection status indicator */}
       {!isConnected && (
         <div className="fixed top-2 right-2 z-50">
@@ -35,7 +33,7 @@ export default function PhonePage() {
       )}
 
       {/* Main content container */}
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col h-full pb-24">
         {/* Map at top - uses real GPS if available */}
         <MobileMap 
           player={state.player} 
@@ -57,7 +55,7 @@ export default function PhonePage() {
         />
 
         {/* Spacer to push content up and allow for safe area at bottom */}
-        <div className="flex-grow" />
+        <div className="flex-grow min-h-4" />
       </div>
 
       {/* Panic Button */}

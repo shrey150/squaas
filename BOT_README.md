@@ -43,9 +43,13 @@ python3 bot.py
 ### Usage
 
 ```bash
-# Basic usage (recommended settings)
+# Basic usage (recommended settings) - Local backend
 export OPENAI_API_KEY="sk-..."
+cd backend
 python3 bot_realtime.py
+
+# Use production backend (deployed on Render)
+python3 bot_realtime.py --prod
 
 # Custom interval (faster/slower)
 python3 bot_realtime.py --interval 2.0  # 0.5 FPS - faster ($23/hr)
@@ -58,8 +62,11 @@ python3 bot_realtime.py --context-size 3   # Remember 9 seconds
 # Test mode (single frame)
 python3 bot_realtime.py --once
 
-# Different backend URL
+# Different backend URL (custom)
 python3 bot_realtime.py --api-url http://192.168.1.100:8787
+
+# Production with custom settings
+python3 bot_realtime.py --prod --interval 2.0 --context-size 10
 ```
 
 ### What the Ultra-Detailed Prompt Captures
